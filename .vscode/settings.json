@@ -1,5 +1,0 @@
-{
-  "eslint.options": {
-    "ignorePath": ".eslintignore"
-  }
-}
