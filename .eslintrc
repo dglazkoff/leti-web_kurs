@@ -1,0 +1,27 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "plugins": [
+    "prettier"
+  ],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "prettier/prettier": 2,
+    "react/prop-types": 0,
+    "import/imports-first": 0,
+
+    // to get rid of deperecation notice
+    "react/require-extension": 0,
+    "import/extensions": 2
+  }
+}

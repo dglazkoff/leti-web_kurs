@@ -1,0 +1,54 @@
+{
+  "main": "index.js",
+  "scripts": {
+    "dev":
+      "./node_modules/.bin/cross-env NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config ./webpack --inline --hot",
+    "build":
+      "rm -rf build/* && ./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack --progress && cp -r static/* build/",
+    "eslint": "./node_modules/.bin/eslint ./src",
+    "stylelint": "./node_modules/.bin/stylelint \"./src/**/*.pcss\"",
+    "prettify": "./node_modules/.bin/prettier --write ./src/**/*.{js,json}"
+  },
+  "dependencies": {
+    "babel-core": "^6.0.0",
+    "babel-loader": "^7.1.2",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.3",
+    "css-loader": "^0.28.9",
+    "css-mqpacker": "^6.0.2",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "lodash": "^4.17.5",
+    "lost": "^8.0.0",
+    "postcss-browser-reporter": "^0.5.0",
+    "postcss-cssnext": "^3.1.0",
+    "postcss-csso": "^3.0.0",
+    "postcss-focus": "^3.0.0",
+    "postcss-import": "^11.1.0",
+    "postcss-loader": "^2.1.0",
+    "postcss-short": "^4.1.0",
+    "precss": "^3.1.0",
+    "style-loader": "^0.20.2",
+    "stylelint": "^9.0.0",
+    "webpack": "^3.11.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.18.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.6.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.10.2",
+    "stylelint-config-standard": "^18.1.0",
+    "stylelint-order": "^0.8.0",
+    "webpack-dev-server": "^2.11.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  }
+}
