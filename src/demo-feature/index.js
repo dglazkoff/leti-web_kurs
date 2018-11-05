@@ -27,7 +27,7 @@ const rocket = new Rocket({
   size_y: 32,
   move_x: 0,
   move_y: 0,
-  speed: 4,
+  speed: 2,
 });
 mapManager.loadMap();
 spriteManager.loadAtlas();
