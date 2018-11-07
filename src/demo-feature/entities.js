@@ -1,7 +1,8 @@
-import { spriteManager } from './index';
+import { spriteManager, gameManager } from './index';
+import PhysicManager from './physicManager';
 
 class Entity {
-  constructor(pos_x = 0, pos_y = 0, size_x = 0, size_y = 0) {
+  constructor(pos_x, pos_y, size_x, size_y) {
     this.pos_x = pos_x;
     this.pos_y = pos_y;
     this.size_x = size_x;
@@ -19,17 +20,27 @@ export class Player extends Entity {
     move_x,
     move_y,
     speed,
+    direction,
   }) {
     super(pos_x, pos_y, size_x, size_y);
     this.lifetime = lifetime;
     this.move_x = move_x;
     this.move_y = move_y;
     this.speed = speed;
+    this.direction = direction;
   }
   draw(ctx) {
-    spriteManager.drawSprite(ctx, 'tankx32', this.pos_x, this.pos_y);
+    spriteManager.drawSprite(
+      ctx,
+      `tank_${this.direction}x32`,
+      this.pos_x,
+      this.pos_y,
+      this.direction,
+    );
   }
-  update() {}
+  update() {
+    PhysicManager.update(this);
+  }
   onTouchEntity(obj) {}
   kill() {}
   fire() {
@@ -59,7 +70,8 @@ export class Player extends Entity {
       default:
         throw new Error();
     }
-    rocket.speed = 4;
+    rocket.speed = gameManager.factory['Rocket'].speed;
+    rocket.direction = this.direction;
     gameManager.entities.push(new Rocket(rocket));
   }
 }
@@ -89,17 +101,47 @@ class Tank extends Entity {
 }
 
 export class Rocket extends Entity {
-  constructor({ pos_x, pos_y, size_x, size_y, move_x, move_y, speed }) {
+  constructor({
+    pos_x,
+    pos_y,
+    size_x,
+    size_y,
+    move_x,
+    move_y,
+    speed,
+    direction,
+  }) {
     super(pos_x, pos_y, size_x, size_y);
     this.move_x = move_x;
     this.move_y = move_y;
     this.speed = speed;
+    this.direction = direction;
   }
   draw(ctx) {
-    spriteManager.drawSprite(ctx, 'rocketx32', this.pos_x, this.pos_y);
+    spriteManager.drawSprite(
+      ctx,
+      `bullet_${this.direction}`,
+      this.pos_x,
+      this.pos_y,
+    );
   }
-  update() {}
-  onTouchEntity(obj) {}
-  onTouchMap(idx) {}
-  kill() {}
+  update() {
+    PhysicManager.update(this);
+  }
+  onTouchEntity(obj) {
+    if (
+      obj.name.match(/enemy[\d*]/) ||
+      obj.name.match(/player/) ||
+      obj.name.match(/rocket[\d*]/)
+    ) {
+      obj.kill();
+    }
+    this.kill();
+  }
+  onTouchMap(idx) {
+    this.kill();
+  }
+  kill() {
+    gameManager.kill(this);
+  }
 }

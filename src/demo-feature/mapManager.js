@@ -1,4 +1,5 @@
 import map from './map.json';
+import { gameManager } from './index';
 
 export default class MapManager {
   constructor() {
@@ -96,7 +97,6 @@ export default class MapManager {
   }
 
   draw(ctx) {
-    console.log(this.imgLoaded, this.jsonLoaded);
     if (!this.imgLoaded || !this.jsonLoaded) {
       setTimeout(() => this.draw(ctx), 100);
     } else {
@@ -132,7 +132,7 @@ export default class MapManager {
       }
     }
   }
-  parseEntities(gameManager) {
+  parseEntities() {
     // разбор слоя типа objectgroup
     if (!this.imgLoaded || !this.jsonLoaded) {
       setTimeout(() => this.parseEntities(), 100);
@@ -143,7 +143,7 @@ export default class MapManager {
           for (let i = 0; i < entities.objects.length; i++) {
             const e = entities.objects[i];
             try {
-              const obj = Object.create(gameManager.factory[e.type]);
+              const obj = gameManager.factory[e.type];
               obj.name = e.name;
               obj.pos_x = e.x;
               obj.pos_y = e.y;
@@ -166,6 +166,7 @@ export default class MapManager {
     const idx =
       Math.floor(wY / this.tSize.y) * this.xCount +
       Math.floor(wX / this.tSize.x);
+    console.log(Math.floor(wY / this.tSize.y));
     return this.tLayer.data[idx];
   }
   centerAt(x, y) {

@@ -41,20 +41,8 @@ export default class SpriteManager {
     } else {
       const sprite = this.getSprite(name);
       if (!mapManager.isVisible(x, y, sprite.w, sprite.h)) return;
-      console.log(x, y);
       x = x - mapManager.view.x;
       y = y - mapManager.view.y;
-      console.log(
-        this.image,
-        sprite.x,
-        sprite.y,
-        sprite.w,
-        sprite.h,
-        x,
-        y,
-        sprite.w,
-        sprite.h,
-      );
       ctx.drawImage(
         this.image,
         sprite.x,
