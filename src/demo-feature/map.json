@@ -91,6 +91,18 @@
       "spacing": 0,
       "tileheight": 32,
       "tilewidth": 32
+    },
+    {
+      "firstgid": 4,
+      "image": "img/tank_upx32.png",
+      "imageheight": 32,
+      "imagewidth": 32,
+      "margin": 0,
+      "name": "enemy1",
+      "properties": {},
+      "spacing": 0,
+      "tileheight": 32,
+      "tilewidth": 32
     }
   ],
   "tilewidth": 32,

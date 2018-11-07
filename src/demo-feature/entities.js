@@ -1,4 +1,4 @@
-import { spriteManager, gameManager } from './index';
+import { spriteManager, gameManager, mapManager } from './index';
 import PhysicManager from './physicManager';
 
 class Entity {
@@ -10,7 +10,7 @@ class Entity {
   }
 }
 
-export class Player extends Entity {
+class Tanks extends Entity {
   constructor({
     pos_x,
     pos_y,
@@ -29,43 +29,35 @@ export class Player extends Entity {
     this.speed = speed;
     this.direction = direction;
   }
-  draw(ctx) {
-    spriteManager.drawSprite(
-      ctx,
-      `tank_${this.direction}x32`,
-      this.pos_x,
-      this.pos_y,
-      this.direction,
-    );
-  }
-  update() {
-    PhysicManager.update(this);
-  }
-  onTouchEntity(obj) {}
-  kill() {}
   fire() {
     const rocket = {};
-    rocket.size_x = 16;
-    rocket.size_y = 16;
+    rocket.size_x = 32;
+    rocket.size_y = 32;
     rocket.name = `rocket${++gameManager.fireNum}`;
-    rocket.move_x = this.move_x;
-    rocket.move_y = this.move_y;
-    switch (this.move_x + 2 * this.move_y) {
-      case -1: // выстрел влево
+    switch (this.direction) {
+      case 'left': // выстрел влево
         rocket.pos_x = this.pos_x - rocket.size_x;
         rocket.pos_y = this.pos_y;
+        rocket.move_x = -1;
+        rocket.move_y = 0;
         break;
-      case 1: // выстрел вправо
+      case 'right': // выстрел вправо
         rocket.pos_x = this.pos_x + this.size_x;
         rocket.pos_y = this.pos_y;
+        rocket.move_x = 1;
+        rocket.move_y = 0;
         break;
-      case -2:
+      case 'up':
         rocket.pos_x = this.pos_x;
         rocket.pos_y = this.pos_y - rocket.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = -1;
         break;
-      case 2:
+      case 'down':
         rocket.pos_x = this.pos_x;
         rocket.pos_y = this.pos_y + this.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = 1;
         break;
       default:
         throw new Error();
@@ -76,28 +68,78 @@ export class Player extends Entity {
   }
 }
 
-class Tank extends Entity {
-  constructor({
-    pos_x,
-    pos_y,
-    size_x,
-    size_y,
-    lifetime,
-    move_x,
-    move_y,
-    speed,
-  }) {
-    super(pos_x, pos_y, size_x, size_y);
-    this.lifetime = lifetime;
-    this.move_x = move_x;
-    this.move_y = move_y;
-    this.speed = speed;
+export class Player extends Tanks {
+  constructor(data) {
+    super(data);
   }
-  draw(ctx) {}
-  update() {}
+  draw(ctx) {
+    spriteManager.drawSprite(
+      ctx,
+      `tank_${this.direction}x32`,
+      this.pos_x,
+      this.pos_y,
+      this.direction,
+    );
+  }
+  update() {
+    if (this.move_x === 1) this.direction = 'right';
+    if (this.move_x === -1) this.direction = 'left';
+    if (this.move_y === -1) this.direction = 'up';
+    if (this.move_y === 1) this.direction = 'down';
+    PhysicManager.update(this);
+  }
   onTouchEntity(obj) {}
-  kill() {}
-  fire() {}
+  kill() {
+    gameManager.kill(this);
+  }
+}
+
+export class Tank extends Tanks {
+  constructor(data) {
+    super(data);
+    console.log(data.name);
+    this.name = data.name;
+  }
+  draw(ctx) {
+    spriteManager.drawSprite(
+      ctx,
+      `tank_${this.direction}x32`,
+      this.pos_x,
+      this.pos_y,
+      this.direction,
+    );
+  }
+  update() {
+    if (this.move_x === 1) this.direction = 'right';
+    if (this.move_x === -1) this.direction = 'left';
+    if (this.move_y === -1) this.direction = 'up';
+    if (this.move_y === 1) this.direction = 'down';
+    PhysicManager.update(this);
+  }
+  onTouchEntity(obj) {}
+  kill() {
+    gameManager.kill(this);
+    let newX;
+    let newY;
+    do {
+      newX = (Math.floor(Math.random() * (mapManager.xCount - 1)) + 1) * 32;
+      newY = (Math.floor(Math.random() * (mapManager.yCount - 1)) + 1) * 32;
+    } while (mapManager.getTilesetIdx(newX, newY) !== 3);
+    gameManager.entities.push(
+      new Tank({
+        name: 'enemy1',
+        pos_x: newX,
+        pos_y: newY,
+        size_x: 32,
+        size_y: 32,
+        lifetime: 100,
+        move_x: 0,
+        move_y: -1,
+        speed: 4,
+        direction: 'down',
+      }),
+    );
+  }
 }
 
 export class Rocket extends Entity {

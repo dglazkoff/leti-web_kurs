@@ -166,7 +166,6 @@ export default class MapManager {
     const idx =
       Math.floor(wY / this.tSize.y) * this.xCount +
       Math.floor(wX / this.tSize.x);
-    console.log(Math.floor(wY / this.tSize.y));
     return this.tLayer.data[idx];
   }
   centerAt(x, y) {

@@ -3,7 +3,7 @@ import MapManager from './mapManager';
 import SpriteManager from './spriteManager';
 import GameManager from './gameManager';
 import EventsManager from './eventsManager';
-import { Player, Rocket } from './entities';
+import { Player, Rocket, Tank } from './entities';
 
 const canvas = document.querySelector('canvas');
 canvas.width = 8 * 32;
@@ -33,6 +33,17 @@ gameManager.factory['Rocket'] = new Rocket({
   move_x: 0,
   move_y: 0,
   speed: 6,
+});
+gameManager.factory['Tank'] = new Tank({
+  pos_x: 128,
+  pos_y: 32,
+  size_x: 32,
+  size_y: 32,
+  lifetime: 100,
+  move_x: 0,
+  move_y: -1,
+  speed: 4,
+  direction: 'down',
 });
 mapManager.loadMap();
 spriteManager.loadAtlas();

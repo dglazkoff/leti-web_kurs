@@ -7,6 +7,7 @@ export default class GameManager {
     this.fireNum = 0; // идентификатор выстрела
     this.player = null;
     this.laterKill = [];
+    this.laterAdd = [];
   }
   initPlayer(obj) {
     this.player = obj;
@@ -21,19 +22,15 @@ export default class GameManager {
     //console.log(eventsManager.action);
     if (eventsManager.action['up']) {
       this.player.move_y = -1;
-      this.player.direction = 'up';
     }
     if (eventsManager.action['down']) {
       this.player.move_y = 1;
-      this.player.direction = 'down';
     }
     if (eventsManager.action['left']) {
       this.player.move_x = -1;
-      this.player.direction = 'left';
     }
     if (eventsManager.action['right']) {
       this.player.move_x = 1;
-      this.player.direction = 'right';
     }
     if (eventsManager.action['fire']) this.player.fire();
     this.entities.forEach(e => {
