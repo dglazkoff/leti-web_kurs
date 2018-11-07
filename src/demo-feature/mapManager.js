@@ -1,4 +1,3 @@
-import map from './map.json';
 import { gameManager } from './index';
 
 export default class MapManager {
@@ -179,7 +178,7 @@ export default class MapManager {
       this.view.y = this.mapSize.y - this.view.h;
     else this.view.y = y - this.view.h / 2;
   }
-  loadMap() {
+  loadMap(map) {
     this.parseMap(map);
   }
 }

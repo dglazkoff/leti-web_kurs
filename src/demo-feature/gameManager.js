@@ -1,4 +1,4 @@
-import { mapManager, eventsManager } from './index';
+import { mapManager, eventsManager, endGame, nextLevel } from './index';
 
 export default class GameManager {
   constructor() {
@@ -8,6 +8,8 @@ export default class GameManager {
     this.player = null;
     this.laterKill = [];
     this.laterAdd = [];
+    this.score = 0;
+    this.finalScore = 1;
   }
   initPlayer(obj) {
     this.player = obj;
@@ -45,6 +47,16 @@ export default class GameManager {
       }
     }
     if (this.laterKill.length > 0) this.laterKill.length = 0;
+    if (this.entities.indexOf(this.player) === -1) {
+      endGame();
+      return;
+    }
+    const score = document.querySelector('.score');
+    score.innerHTML = this.score;
+    if (+score.innerHTML === this.finalScore){
+      nextLevel();
+      return;
+    } 
     mapManager.draw(ctx);
     mapManager.centerAt(this.player.pos_x, this.player.pos_y);
     this.draw(ctx);
@@ -53,7 +65,11 @@ export default class GameManager {
     for (let e = 0; e < this.entities.length; e++)
       this.entities[e].draw(ctx, this.player);
   }
+  clear() {
+    console.log(this.entities);
+    this.entities.forEach(item => clearInterval(item.timer));
+  }
   play(ctx) {
-    setInterval(() => this.update(ctx), 100);
+    this.playInterval = setInterval(() => this.update(ctx), 100);
   }
 }

@@ -33,7 +33,7 @@ class Tanks extends Entity {
     const rocket = {};
     rocket.size_x = 32;
     rocket.size_y = 32;
-    rocket.name = `rocket${++gameManager.fireNum}`;
+    rocket.name = `bullet${++gameManager.fireNum}`;
     switch (this.direction) {
       case 'left': // выстрел влево
         rocket.pos_x = this.pos_x - rocket.size_x;
@@ -97,8 +97,8 @@ export class Player extends Tanks {
 export class Tank extends Tanks {
   constructor(data) {
     super(data);
-    console.log(data.name);
     this.name = data.name;
+    this.timer = setInterval(() => this.fire(), 1500);
   }
   draw(ctx) {
     spriteManager.drawSprite(
@@ -119,12 +119,16 @@ export class Tank extends Tanks {
   onTouchEntity(obj) {}
   kill() {
     gameManager.kill(this);
+    gameManager.score += 1;
     let newX;
     let newY;
     do {
       newX = (Math.floor(Math.random() * (mapManager.xCount - 1)) + 1) * 32;
       newY = (Math.floor(Math.random() * (mapManager.yCount - 1)) + 1) * 32;
-    } while (mapManager.getTilesetIdx(newX, newY) !== 3);
+    } while (
+      mapManager.getTilesetIdx(newX, newY) !== 3 ||
+      PhysicManager.entityAtXY(this, newX, newY)
+    );
     gameManager.entities.push(
       new Tank({
         name: 'enemy1',
@@ -139,6 +143,7 @@ export class Tank extends Tanks {
         direction: 'down',
       }),
     );
+    clearInterval(this.timer);
   }
 }
 
@@ -174,7 +179,7 @@ export class Rocket extends Entity {
     if (
       obj.name.match(/enemy[\d*]/) ||
       obj.name.match(/player/) ||
-      obj.name.match(/rocket[\d*]/)
+      obj.name.match(/bullet[\d*]/)
     ) {
       obj.kill();
     }

@@ -3,6 +3,10 @@ export default class EventsManager {
     this.bind = [];
     this.action = [];
   }
+  init() {
+    this.action = [];
+    this.bid = [];
+  }
   setup(canvas) {
     this.bind[87] = 'up'; // w
     this.bind[65] = 'left'; // a
@@ -19,6 +23,6 @@ export default class EventsManager {
   onKeyUp(event) {
     const action = this.bind[event.keyCode];
     if (action) this.action[action] = false;
-    console.log(action);
+    console.log(this, action);
   }
 }
