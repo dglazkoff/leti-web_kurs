@@ -8,3 +8,22 @@ $brandcolor: #ffe288;
 body {
   font-family: 'RobotoBoldItalic', sans-serif;
 }
+
+.popup {
+  display: none;
+
+  &.active {
+    position: absolute;
+    display: block;
+    background-color: #ccc;
+    opacity: 0.8;
+    border: 1px solid #333;
+    border-radius: 9px;
+    padding: 20px;
+  }
+}
+
+.content {
+  position: relative;
+  display: flex;
+}

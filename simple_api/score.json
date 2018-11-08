@@ -1,0 +1,20 @@
+{
+    "users": [
+        {
+            "name": "Dima",
+            "score": 100500
+        },
+        {
+            "name": "ll",
+            "score": "3"
+        },
+        {
+            "name": "f",
+            "score": "5"
+        },
+        {
+            "name": "dimon",
+            "score": "8"
+        }
+    ]
+}

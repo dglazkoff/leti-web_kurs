@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js dev
+  C:\Program Files\nodejs\node.exe C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js remove fs-web
 
 PATH: 
-  C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Users\Dima\AppData\Local\Microsoft\WindowsApps;C:\Users\Dima\AppData\Roaming\npm;C:\MinGW\bin;
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\WINDOWS\System32\OpenSSH\;C:\Users\Dima\AppData\Local\Microsoft\WindowsApps;C:\Users\Dima\AppData\Roaming\npm;C:\MinGW\bin;;D:\Microsoft VS Code\bin
 
 Yarn version: 
   1.5.1
@@ -15,21 +15,13 @@ Platform:
 
 npm manifest: 
   {
-    "name": "4xxi-frontend-boilerplate",
-    "version": "1.0.0",
-    "description": "An example project demonstarting stack of technologies that are used in 4xxi.",
-    "repository": "git@bitbucket.org:4xxi/4xxi-frontend-boilerplate.git",
-    "author": "4xxi Software Ltd",
-    "license": "MIT",
-    "homepage": "https://4xxi.com/",
     "main": "index.js",
     "scripts": {
       "dev": "./node_modules/.bin/cross-env NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config ./webpack --inline --hot",
       "build": "rm -rf build/* && ./node_modules/.bin/cross-env NODE_ENV=production ./node_modules/.bin/webpack --config ./webpack --progress && cp -r static/* build/",
       "eslint": "./node_modules/.bin/eslint ./src",
       "stylelint": "./node_modules/.bin/stylelint \"./src/**/*.pcss\"",
-      "prettify": "./node_modules/.bin/prettier --write ./src/**/*.{js,json}",
-      "precommit": "lint-staged"
+      "prettify": "./node_modules/.bin/prettier --write ./src/**/*.{js,json}"
     },
     "dependencies": {
       "babel-core": "^6.0.0",
@@ -40,6 +32,7 @@ npm manifest:
       "css-loader": "^0.28.9",
       "css-mqpacker": "^6.0.2",
       "extract-text-webpack-plugin": "^3.0.2",
+      "fs": "^0.0.1-security",
       "lodash": "^4.17.5",
       "lost": "^8.0.0",
       "postcss-browser-reporter": "^0.5.0",
@@ -2912,6 +2905,10 @@ Lockfile:
   fs.realpath@^1.0.0:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/fs.realpath/-/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
+  
+  fs@^0.0.1-security:
+    version "0.0.1-security"
+    resolved "https://registry.yarnpkg.com/fs/-/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
   
   fsevents@^1.0.0:
     version "1.1.3"
@@ -7816,16 +7813,10 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 3221225786
-  Command: C:\Windows\system32\cmd.exe
-  Arguments: /d /s /c .\node_modules\.bin\cross-env NODE_ENV=development ./node_modules/.bin/webpack-dev-server --config ./webpack --inline --hot
-  Directory: D:\4xxi-frontend-boilerplate
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:30281:17)
-      at ChildProcess.emit (events.js:160:13)
-      at maybeClose (internal/child_process.js:943:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:220:5)
+  Error: This module isn't specified in a manifest.
+      at new MessageError (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:186:110)
+      at Object.<anonymous> (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:60445:15)
+      at Generator.next (<anonymous>)
+      at step (C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:98:30)
+      at C:\Users\Dima\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:109:13
+      at <anonymous>

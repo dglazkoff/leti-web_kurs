@@ -8,9 +8,20 @@
 </head>
 
 <body>
-  <div class="score"></div>
-  <canvas></canvas>
+  <button class="button_level_1">Level 1</button>
+  <button class="button_level_2">level 2</button>
   <button class="button_start">Start</button>
+  <div>Score: <span class="score"></span></div>
+  <div class="content">
+    <div class="popup">
+      <div>You loose the game.</div>
+      <label for="name">Name:</label>
+      <input id="name" typr="text" class="popup__input_name">
+      <input type="submit" value="Save" class="popup__input_save">
+    </div>
+    <canvas></canvas>
+    <table class="table_score"></table>
+  </div>
   <script src="/demo-feature.js"></script>
 </body>
 

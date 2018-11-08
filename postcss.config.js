@@ -7,7 +7,6 @@ const lostGrid = require('lost');
 const cssMqpacker = require('css-mqpacker');
 const csso = require('postcss-csso');
 const reporter = require('postcss-browser-reporter');
-const stylelint = require('stylelint');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -25,7 +24,6 @@ module.exports = function(postcss) {
     csso,
   ];
   if (NODE_ENV !== 'production') {
-    postCSSPluginsArray.unshift(stylelint);
     postCSSPluginsArray.push(
       reporter({
         selector: 'body:before',

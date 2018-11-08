@@ -1,0 +1,17 @@
+{
+  "name": "simple_api",
+  "version": "0.0.1",
+  "description": "core",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "core-js": "^0.9.6",
+    "cors": "^2.8.5",
+    "express": "^4.13.3",
+    "fs": "^0.0.1-security",
+    "object-assign": "4.0.1",
+    "qs": "^5.2.0"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
+  }
+}

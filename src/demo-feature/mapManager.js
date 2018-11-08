@@ -3,7 +3,7 @@ import { gameManager } from './index';
 export default class MapManager {
   constructor() {
     this.mapData = null; // переменная для хранения карты
-    this.tLayer = null; // переменная ждя хранения ссылки на блоки карты
+    this.tLayer = null; // переменная для хранения ссылки на блоки карты
     this.xCount = 0; // количество блоков по горизонтали
     this.yCount = 0; // количество блоков по вертикали
     this.tSize = {
@@ -21,8 +21,8 @@ export default class MapManager {
     this.view = {
       x: 0,
       y: 0,
-      w: 800,
-      h: 600,
+      w: 1000,
+      h: 1000,
     };
   }
 
@@ -142,7 +142,7 @@ export default class MapManager {
           for (let i = 0; i < entities.objects.length; i++) {
             const e = entities.objects[i];
             try {
-              const obj = gameManager.factory[e.type];
+              const obj = gameManager.factory[e.type]();
               obj.name = e.name;
               obj.pos_x = e.x;
               obj.pos_y = e.y;

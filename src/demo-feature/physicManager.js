@@ -40,7 +40,10 @@ export default class PhysicManager {
       newX + (obj.move_x === 1 || obj.move_y ? 1 : 0) * (obj.size_x - 1);
     const tsY =
       newY + (obj.move_y === 1 || obj.move_x ? 1 : 0) * (obj.size_y - 1);
-    let ts = mapManager.getTilesetIdx(tsX, tsY);
+    let ts = mapManager.getTilesetIdx(obj.pos_x, obj.pos_y);
+    if (ts === 3) {
+      ts = mapManager.getTilesetIdx(tsX, tsY);
+    }
     if (ts === 3) {
       ts = mapManager.getTilesetIdx(newX, newY);
     }

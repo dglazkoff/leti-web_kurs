@@ -1,4 +1,4 @@
-import { mapManager, eventsManager, endGame, nextLevel } from './index';
+import { mapManager, eventsManager, endGame, savePlayer } from './index';
 
 export default class GameManager {
   constructor() {
@@ -46,17 +46,18 @@ export default class GameManager {
         this.entities.splice(idx, 1);
       }
     }
-    if (this.laterKill.length > 0) this.laterKill.length = 0;
+    if (this.laterKill.length) this.laterKill.length = 0;
     if (this.entities.indexOf(this.player) === -1) {
+      savePlayer();
       endGame();
       return;
     }
     const score = document.querySelector('.score');
     score.innerHTML = this.score;
-    if (+score.innerHTML === this.finalScore){
-      nextLevel();
-      return;
-    } 
+    // if (+score.innerHTML === this.finalScore){
+    //   nextLevel();
+    //   return;
+    // }
     mapManager.draw(ctx);
     mapManager.centerAt(this.player.pos_x, this.player.pos_y);
     this.draw(ctx);
@@ -70,6 +71,6 @@ export default class GameManager {
     this.entities.forEach(item => clearInterval(item.timer));
   }
   play(ctx) {
-    this.playInterval = setInterval(() => this.update(ctx), 100);
+    this.playInterval = setInterval(() => this.update(ctx), 50);
   }
 }

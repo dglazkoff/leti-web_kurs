@@ -1,4 +1,4 @@
-import sprite from './sprites.json';
+import sprite from './spritesx8.json';
 import { mapManager } from './index';
 
 export default class SpriteManager {
@@ -57,7 +57,7 @@ export default class SpriteManager {
     }
   }
   loadAtlas() {
-    this.loadImage('/img/spritesheet.png');
+    this.loadImage('/img/spritesheetx8.png');
     this.parseAtlas(sprite);
   }
 }

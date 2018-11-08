@@ -29,43 +29,6 @@ class Tanks extends Entity {
     this.speed = speed;
     this.direction = direction;
   }
-  fire() {
-    const rocket = {};
-    rocket.size_x = 32;
-    rocket.size_y = 32;
-    rocket.name = `bullet${++gameManager.fireNum}`;
-    switch (this.direction) {
-      case 'left': // выстрел влево
-        rocket.pos_x = this.pos_x - rocket.size_x;
-        rocket.pos_y = this.pos_y;
-        rocket.move_x = -1;
-        rocket.move_y = 0;
-        break;
-      case 'right': // выстрел вправо
-        rocket.pos_x = this.pos_x + this.size_x;
-        rocket.pos_y = this.pos_y;
-        rocket.move_x = 1;
-        rocket.move_y = 0;
-        break;
-      case 'up':
-        rocket.pos_x = this.pos_x;
-        rocket.pos_y = this.pos_y - rocket.size_y;
-        rocket.move_x = 0;
-        rocket.move_y = -1;
-        break;
-      case 'down':
-        rocket.pos_x = this.pos_x;
-        rocket.pos_y = this.pos_y + this.size_y;
-        rocket.move_x = 0;
-        rocket.move_y = 1;
-        break;
-      default:
-        throw new Error();
-    }
-    rocket.speed = gameManager.factory['Rocket'].speed;
-    rocket.direction = this.direction;
-    gameManager.entities.push(new Rocket(rocket));
-  }
 }
 
 export class Player extends Tanks {
@@ -91,6 +54,43 @@ export class Player extends Tanks {
   onTouchEntity(obj) {}
   kill() {
     gameManager.kill(this);
+  }
+  fire() {
+    const rocket = {};
+    rocket.size_x = 8;
+    rocket.size_y = 8;
+    rocket.name = `bullet${++gameManager.fireNum}`;
+    switch (this.direction) {
+      case 'left': // выстрел влево
+        rocket.pos_x = this.pos_x - rocket.size_x;
+        rocket.pos_y = this.pos_y + this.size_x / 2 - rocket.size_y / 4;
+        rocket.move_x = -1;
+        rocket.move_y = 0;
+        break;
+      case 'right': // выстрел вправо
+        rocket.pos_x = this.pos_x + this.size_x;
+        rocket.pos_y = this.pos_y + this.size_x / 2 - rocket.size_y / 4;
+        rocket.move_x = 1;
+        rocket.move_y = 0;
+        break;
+      case 'up':
+        rocket.pos_x = this.pos_x + this.size_x / 2 - rocket.size_x / 4;
+        rocket.pos_y = this.pos_y - rocket.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = -1;
+        break;
+      case 'down':
+        rocket.pos_x = this.pos_x + this.size_x / 2 - rocket.size_x / 4;
+        rocket.pos_y = this.pos_y + this.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = 1;
+        break;
+      default:
+        throw new Error();
+    }
+    rocket.speed = 10;
+    rocket.direction = this.direction;
+    gameManager.entities.push(new RocketPlayer(rocket));
   }
 }
 
@@ -131,7 +131,7 @@ export class Tank extends Tanks {
     );
     gameManager.entities.push(
       new Tank({
-        name: 'enemy1',
+        name: this.name,
         pos_x: newX,
         pos_y: newY,
         size_x: 32,
@@ -139,15 +139,52 @@ export class Tank extends Tanks {
         lifetime: 100,
         move_x: 0,
         move_y: -1,
-        speed: 4,
+        speed: this.speed,
         direction: 'down',
       }),
     );
     clearInterval(this.timer);
   }
+  fire() {
+    const rocket = {};
+    rocket.size_x = 8;
+    rocket.size_y = 8;
+    rocket.name = `bullet${++gameManager.fireNum}`;
+    switch (this.direction) {
+      case 'left': // выстрел влево
+        rocket.pos_x = this.pos_x - rocket.size_x;
+        rocket.pos_y = this.pos_y + this.size_x / 2 - rocket.size_y / 4;
+        rocket.move_x = -1;
+        rocket.move_y = 0;
+        break;
+      case 'right': // выстрел вправо
+        rocket.pos_x = this.pos_x + this.size_x;
+        rocket.pos_y = this.pos_y + this.size_x / 2 - rocket.size_y / 4;
+        rocket.move_x = 1;
+        rocket.move_y = 0;
+        break;
+      case 'up':
+        rocket.pos_x = this.pos_x + this.size_x / 2 - rocket.size_x / 4;
+        rocket.pos_y = this.pos_y - rocket.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = -1;
+        break;
+      case 'down':
+        rocket.pos_x = this.pos_x + this.size_x / 2 - rocket.size_x / 4;
+        rocket.pos_y = this.pos_y + this.size_y;
+        rocket.move_x = 0;
+        rocket.move_y = 1;
+        break;
+      default:
+        throw new Error();
+    }
+    rocket.speed = 10;
+    rocket.direction = this.direction;
+    gameManager.entities.push(new RocketEnemy(rocket));
+  }
 }
 
-export class Rocket extends Entity {
+class Rockets extends Entity {
   constructor({
     pos_x,
     pos_y,
@@ -157,17 +194,19 @@ export class Rocket extends Entity {
     move_y,
     speed,
     direction,
+    name,
   }) {
     super(pos_x, pos_y, size_x, size_y);
     this.move_x = move_x;
     this.move_y = move_y;
     this.speed = speed;
     this.direction = direction;
+    this.name = name;
   }
   draw(ctx) {
     spriteManager.drawSprite(
       ctx,
-      `bullet_${this.direction}`,
+      `bullet_${this.direction}x8`,
       this.pos_x,
       this.pos_y,
     );
@@ -175,20 +214,34 @@ export class Rocket extends Entity {
   update() {
     PhysicManager.update(this);
   }
-  onTouchEntity(obj) {
-    if (
-      obj.name.match(/enemy[\d*]/) ||
-      obj.name.match(/player/) ||
-      obj.name.match(/bullet[\d*]/)
-    ) {
-      obj.kill();
-    }
-    this.kill();
-  }
   onTouchMap(idx) {
     this.kill();
   }
   kill() {
     gameManager.kill(this);
+  }
+}
+
+export class RocketPlayer extends Rockets {
+  constructor(data) {
+    super(data);
+  }
+  onTouchEntity(obj) {
+    if (obj.name.match(/enemy[\d*]/) || obj.name.match(/bullet[\d*]/)) {
+      obj.kill();
+    }
+    this.kill();
+  }
+}
+
+export class RocketEnemy extends Rockets {
+  constructor(data) {
+    super(data);
+  }
+  onTouchEntity(obj) {
+    if (obj.name.match(/player/) || obj.name.match(/bullet[\d*]/)) {
+      obj.kill();
+    }
+    this.kill();
   }
 }
