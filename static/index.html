@@ -1,28 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Game</title>
+    <link href="/demo-feature.css" rel="stylesheet" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Game</title>
-  <link href="/demo-feature.css" rel="stylesheet" />
-</head>
-
-<body>
-  <button class="button_level_1">Level 1</button>
-  <button class="button_level_2">level 2</button>
-  <button class="button_start">Start</button>
-  <div>Score: <span class="score"></span></div>
-  <div class="content">
-    <div class="popup">
-      <div>You loose the game.</div>
-      <label for="name">Name:</label>
-      <input id="name" typr="text" class="popup__input_name">
-      <input type="submit" value="Save" class="popup__input_save">
+  <body>
+    <div class="content">
+      <div class="menu">
+        <button class="menu__button button_level_1">Level 1</button>
+        <button class="menu__button button_level_2">level 2</button>
+        <button class="menu__button button_start">Start</button>
+      </div>
+      <div class="score_wrapper">Score: <span class="score"></span></div>
+      <div class="overlay">
+        <div class="popup">
+          <div>You loose the game.</div>
+          <label for="name">Name:</label>
+          <input id="name" typr="text" class="popup__input_name" />
+          <input type="submit" value="Save" class="popup__input_save" />
+          <button class="popup__cancel">Cancel</button>
+        </div>
+      </div>
+      <canvas></canvas>
+      <table class="table_score"></table>
     </div>
-    <canvas></canvas>
-    <table class="table_score"></table>
-  </div>
-  <script src="/demo-feature.js"></script>
-</body>
-
+    <script src="/demo-feature.js"></script>
+  </body>
 </html>

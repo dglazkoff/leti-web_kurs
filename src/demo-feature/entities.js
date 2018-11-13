@@ -1,4 +1,4 @@
-import { spriteManager, gameManager, mapManager } from './index';
+import { spriteManager, gameManager, mapManager, soundManager } from './index';
 import PhysicManager from './physicManager';
 
 class Entity {
@@ -34,6 +34,7 @@ class Tanks extends Entity {
 export class Player extends Tanks {
   constructor(data) {
     super(data);
+    this.isBullet = true;
   }
   draw(ctx) {
     spriteManager.drawSprite(
@@ -56,6 +57,13 @@ export class Player extends Tanks {
     gameManager.kill(this);
   }
   fire() {
+    if (!this.isBullet) return;
+    this.isBullet = false;
+    this.timer = setTimeout(() => {
+      this.isBullet = true;
+      clearTimeout(this.timer);
+    }, 1000);
+    soundManager.play('./sound/shot.mp3');
     const rocket = {};
     rocket.size_x = 8;
     rocket.size_y = 8;
@@ -120,6 +128,8 @@ export class Tank extends Tanks {
   kill() {
     gameManager.kill(this);
     gameManager.score += 1;
+    //debugger;
+    soundManager.play('./sound/die.mp3');
     let newX;
     let newY;
     do {

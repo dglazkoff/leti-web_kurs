@@ -6,6 +6,7 @@ import SpriteManager from './spriteManager';
 import GameManager from './gameManager';
 import EventsManager from './eventsManager';
 import { Player, RocketPlayer, RocketEnemy, Tank } from './entities';
+import SoundManager from './soundManager';
 
 const canvas = document.querySelector('canvas');
 canvas.width = 15 * 32;
@@ -15,10 +16,18 @@ const start = document.querySelector('.button_start');
 const level1 = document.querySelector('.button_level_1');
 const level2 = document.querySelector('.button_level_2');
 let currentMap = map1;
+let currentLevel = 1;
 
 export const spriteManager = new SpriteManager();
 export const eventsManager = new EventsManager();
+export const soundManager = new SoundManager();
 
+soundManager.init();
+soundManager.loadArray([
+  './sound/die.mp3',
+  './sound/shot.mp3',
+  './sound/loose.mp3',
+]);
 eventsManager.setup(canvas);
 
 export let gameManager;
@@ -91,12 +100,14 @@ export function endGame() {
 
 export function savePlayer() {
   const popup = document.querySelector('.popup');
-  popup.classList.add('active');
+  const overlay = document.querySelector('.overlay');
+  overlay.style.display = 'block';
   const save = popup.querySelector('.popup__input_save');
+  const cancel = popup.querySelector('.popup__cancel');
   save.addEventListener('click', () => {
     const nameInput = popup.querySelector('.popup__input_name');
     const scoreInput = document.querySelector('.score');
-    fetch('http://localhost:3001/users', {
+    fetch(`http://localhost:3001/levels/${currentLevel}/users`, {
       method: 'POST',
       headers: {
         Accept: 'application/json, text/plain, */*',
@@ -109,14 +120,16 @@ export function savePlayer() {
     }).then(() => {
       getScore();
     });
-    popup.classList.remove('active');
+    overlay.style.display = 'none';
   });
+  cancel.addEventListener('click', () => cancelSavePlayer(overlay));
 }
 
 function getScore() {
-  fetch('http://localhost:3001/users')
+  fetch(`http://localhost:3001/levels/${currentLevel}/users`)
     .then(res => res.json())
     .then(res => {
+      res.sort((a, b) => b.score - a.score);
       const table = document.querySelector('.table_score');
       table.innerHTML = '';
       const caption = document.createElement('caption');
@@ -146,9 +159,17 @@ function getScore() {
 level1.addEventListener('click', () => {
   if (gameManager) endGame();
   currentMap = map1;
+  currentLevel = 1;
+  getScore();
 });
 
 level2.addEventListener('click', () => {
   if (gameManager) endGame();
   currentMap = map2;
+  currentLevel = 2;
+  getScore();
 });
+
+function cancelSavePlayer(overlay) {
+  overlay.style.display = 'none';
+}

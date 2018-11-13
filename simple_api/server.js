@@ -25,30 +25,33 @@ app.use(
   })
 );
 
-app.get('/users', function(req, res, next) {
+app.get('/levels/:level/users', function(req, res, next) {
   console.log('get /');
-  res.json(scoreJSON.users);
+  res.json(scoreJSON[`level${req.params.level}`].users);
 });
 
-app.post('/users', (req, res, next) => {
+app.post('/levels/:level/users', (req, res, next) => {
   console.log('post /');
   const { name, score } = req.body;
-  const userJSON = scoreJSON.users.find(user => user.name === name);
+  const { level } = req.params;
+  const userJSON = scoreJSON[`level${level}`].users.find(
+    user => user.name === name
+  );
   if (userJSON) {
     if (+userJSON.score < +score) {
       Object.assign(userJSON, {
         name,
-        score,
+        score: +score,
       });
     }
   } else {
-    scoreJSON.users.push({
+    scoreJSON[`level${level}`].users.push({
       name,
-      score,
+      score: +score,
     });
   }
   writeToJSON('./score.json', scoreJSON);
-  res.json(scoreJSON.users);
+  res.json(scoreJSON[`level${level}`].users);
 });
 
 function writeToJSON(url, data) {

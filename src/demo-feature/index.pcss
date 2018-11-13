@@ -9,21 +9,37 @@ body {
   font-family: 'RobotoBoldItalic', sans-serif;
 }
 
-.popup {
-  display: none;
+.menu {
+  width: 100%;
+}
 
-  &.active {
-    position: absolute;
-    display: block;
-    background-color: #ccc;
-    opacity: 0.8;
-    border: 1px solid #333;
-    border-radius: 9px;
-    padding: 20px;
-  }
+.score_wrapper {
+  width: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+.popup {
+  position: absolute;
+  display: block;
+  background-color: #ccc;
+  opacity: 0.8;
+  border: 1px solid #333;
+  border-radius: 9px;
+  padding: 20px;
+  left: calc(50% - 230px);
+  top: calc(50%);
 }
 
 .content {
-  position: relative;
   display: flex;
+  flex-wrap: wrap;
 }

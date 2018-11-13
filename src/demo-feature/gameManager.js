@@ -1,4 +1,10 @@
-import { mapManager, eventsManager, endGame, savePlayer } from './index';
+import {
+  mapManager,
+  eventsManager,
+  endGame,
+  savePlayer,
+  soundManager,
+} from './index';
 
 export default class GameManager {
   constructor() {
@@ -48,6 +54,7 @@ export default class GameManager {
     }
     if (this.laterKill.length) this.laterKill.length = 0;
     if (this.entities.indexOf(this.player) === -1) {
+      soundManager.play('./sound/loose.mp3');
       savePlayer();
       endGame();
       return;

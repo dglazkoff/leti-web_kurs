@@ -1,20 +1,46 @@
 {
-    "users": [
-        {
-            "name": "Dima",
-            "score": 100500
-        },
-        {
-            "name": "ll",
-            "score": "3"
-        },
-        {
-            "name": "f",
-            "score": "5"
-        },
-        {
-            "name": "dimon",
-            "score": "8"
-        }
-    ]
+    "level1": {
+        "users": [
+            {
+                "name": "Dima",
+                "score": 100500
+            },
+            {
+                "name": "ll",
+                "score": 10
+            },
+            {
+                "name": "f",
+                "score": 5
+            },
+            {
+                "name": "dimon",
+                "score": 32
+            },
+            {
+                "name": "lol",
+                "score": 13
+            },
+            {
+                "name": "madMax",
+                "score": 99
+            }
+        ]
+    },
+    "level2": {
+        "users": [
+            {
+                "name": "Dima",
+                "score": 500100
+            },
+            {
+                "name": "ll",
+                "score": 7
+            },
+            {
+                "name": "lol",
+                "score": 29
+            }
+        ]
+    }
 }
